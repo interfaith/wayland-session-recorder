@@ -27,11 +27,12 @@ jobs:
     needs: test
     steps:
       - uses: actions/checkout@v4
-      - name: Build Snap package
-        uses: canonical/action-snapcraft@v1
+      - name: Build Snap
+        id: snapcraft
+        uses: snapcore/action-build@v1
       - name: Upload Snap artifact
         uses: actions/upload-artifact@v4
         with:
           name: wayland-session-recorder-snap
-          path: "*.snap"
+          path: ${{ steps.snapcraft.outputs.snap }}
 

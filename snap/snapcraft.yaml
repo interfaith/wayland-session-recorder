@@ -28,7 +28,7 @@ apps:
   wayland-rec-ui:
     command: bin/wayland-rec-ui
     environment:
-      LD_LIBRARY_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/weston:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libweston-14
+      LD_LIBRARY_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/weston:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libweston-13:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libweston-14
       GST_PLUGIN_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gstreamer-1.0
       GST_PLUGIN_SCANNER: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gstreamer1.0/gstreamer-1.0/gst-plugin-scanner
       WESTON_MODULE_MAP: ""
