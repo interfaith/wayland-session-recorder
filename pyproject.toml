@@ -22,6 +22,7 @@ classifiers = [
 
 [project.scripts]
 wayland-rec = "wayland_rec.cli:main"
+wayland-rec-ui = "wayland_rec.web:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
