@@ -73,11 +73,9 @@ def run_session(args: argparse.Namespace) -> int:
         if not wl["pipewire_node_id"]:
             raise RuntimeError("Weston started, but no PipeWire video stream node was detected.")
 
-        # Build isolated environment for the target application
         app_env = os.environ.copy()
         app_env["WAYLAND_DISPLAY"] = wl["WAYLAND_DISPLAY"]
         app_env["PULSE_SINK"] = audio["PULSE_SINK"]
-        # Force GUI toolkits (GTK/Qt/Electron/Firefox) to use Wayland instead of host X11
         app_env["GDK_BACKEND"] = "wayland"
         app_env["QT_QPA_PLATFORM"] = "wayland"
         app_env["MOZ_ENABLE_WAYLAND"] = "1"
@@ -92,10 +90,13 @@ def run_session(args: argparse.Namespace) -> int:
             )
         )
 
-        # Give GStreamer a moment to negotiate PipeWire buffers before launching target app
         time.sleep(0.5)
 
-        app_proc = subprocess.Popen(shlex.split(args.cmd), env=app_env)
+        app_proc = subprocess.Popen(
+            shlex.split(args.cmd),
+            env=app_env,
+            start_new_session=True,
+        )
         try:
             start_time = time.monotonic()
             while not stop_requested:
@@ -106,11 +107,14 @@ def run_session(args: argparse.Namespace) -> int:
                 time.sleep(0.1)
         finally:
             if app_proc.poll() is None:
-                app_proc.terminate()
                 try:
+                    os.killpg(os.getpgid(app_proc.pid), signal.SIGTERM)
                     app_proc.wait(timeout=3.0)
-                except subprocess.TimeoutExpired:
-                    app_proc.kill()
+                except (ProcessLookupError, subprocess.TimeoutExpired):
+                    try:
+                        os.killpg(os.getpgid(app_proc.pid), signal.SIGKILL)
+                    except ProcessLookupError:
+                        pass
                     app_proc.wait()
 
     print(f"Saved recording to {args.out}")

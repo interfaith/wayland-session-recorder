@@ -13,6 +13,11 @@ confinement: strict
 apps:
   wayland-rec:
     command: bin/wayland-rec
+    environment:
+      LD_LIBRARY_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/weston:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libweston-14
+      GST_PLUGIN_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gstreamer-1.0
+      GST_PLUGIN_SCANNER: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gstreamer1.0/gstreamer-1.0/gst-plugin-scanner
+      WESTON_MODULE_MAP: ""
     plugs:
       - wayland
       - audio-playback
@@ -27,6 +32,7 @@ parts:
     stage-packages:
       - weston
       - pipewire-bin
+      - pipewire-pulse
       - pulseaudio-utils
       - gstreamer1.0-tools
       - gstreamer1.0-plugins-base
