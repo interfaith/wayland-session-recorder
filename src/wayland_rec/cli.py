@@ -79,6 +79,7 @@ def run_session(args: argparse.Namespace) -> int:
         app_env["GDK_BACKEND"] = "wayland"
         app_env["QT_QPA_PLATFORM"] = "wayland"
         app_env["MOZ_ENABLE_WAYLAND"] = "1"
+        app_env["XDG_SESSION_TYPE"] = "wayland"
         app_env.pop("DISPLAY", None)
 
         stack.enter_context(

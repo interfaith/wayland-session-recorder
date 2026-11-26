@@ -61,12 +61,18 @@ def headless_wayland_session(
         ini_path = Path(tmpdir) / "weston.ini"
         ini_path.write_text(
             "[core]\n"
-            "shell=kiosk-shell.so\n"
+            "shell=desktop-shell.so\n"
             "idle-time=0\n"
+            "[shell]\n"
+            "panel-position=none\n"
+            "background-color=0xff000000\n"
+            "[input]\n"
+            "seat=default\n"
             "[output]\n"
             "name=pipewire\n"
             f"mode={width}x{height}\n"
         )
+
 
         cmd = [
             "weston",
