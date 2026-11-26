@@ -69,7 +69,7 @@ sudo apt update && sudo apt install -y \
 
 ### Install from Source
 ```bash
-git clone https://github.com<your-username>/wayland-session-recorder.git
+git clone https://github.com/interfaith/wayland-session-recorder.git
 cd wayland-session-recorder
 python3 -m venv .venv
 source .venv/bin/activate
