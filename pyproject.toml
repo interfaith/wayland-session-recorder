@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wayland-session-recorder"
+version = "0.1.0"
+description = "Isolated headless Wayland compositor and PipeWire session recorder for automated testing and CI/CD."
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "GPL-3.0-or-later"}
+authors = [
+    {name = "Mark Spowage"}
+]
+classifiers = [
+    "Environment :: Console",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Topic :: Multimedia :: Video :: Capture",
+    "Topic :: Software Development :: Testing",
+]
+
+[project.scripts]
+wayland-rec = "wayland_rec.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+

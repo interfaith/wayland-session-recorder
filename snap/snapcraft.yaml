@@ -1,0 +1,38 @@
+name: wayland-session-recorder
+base: core24
+version: '0.1.0'
+summary: Isolated headless Wayland & PipeWire session recorder
+description: |
+  Spins up an isolated Weston compositor with a PipeWire video stream and
+  virtual PipeWire audio sink to capture GUI application runs and automated
+  browser tests into synchronized H.264/AAC MP4 artifacts.
+
+grade: stable
+confinement: strict
+
+apps:
+  wayland-rec:
+    command: bin/wayland-rec
+    plugs:
+      - wayland
+      - audio-playback
+      - audio-record
+      - home
+      - network
+
+parts:
+  wayland-rec:
+    plugin: python
+    source: .
+    stage-packages:
+      - weston
+      - pipewire-bin
+      - pulseaudio-utils
+      - gstreamer1.0-tools
+      - gstreamer1.0-plugins-base
+      - gstreamer1.0-plugins-good
+      - gstreamer1.0-plugins-bad
+      - gstreamer1.0-plugins-ugly
+      - gstreamer1.0-pipewire
+      - gstreamer1.0-pulseaudio
+
